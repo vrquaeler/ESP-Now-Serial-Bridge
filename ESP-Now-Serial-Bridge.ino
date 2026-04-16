@@ -104,7 +104,24 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 }
 #endif
 
-void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
+// Depricated function for use with older ESP32 Core versions
+// void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
+//   #ifdef BLINK_ON_RECV
+//   digitalWrite(LED_BUILTIN, HIGH);
+//   #endif
+//   memcpy(&buf_recv, incomingData, sizeof(buf_recv));
+//   Serial.write(buf_recv, len);
+//   #ifdef BLINK_ON_RECV
+//   digitalWrite(LED_BUILTIN, LOW);
+//   #endif
+//   #ifdef DEBUG
+//   Serial.print("\n Bytes received: ");
+//   Serial.println(len);
+//   #endif
+// }
+
+// Use this vunction with ESP32 core 2.X.X and above
+void OnDataRecv(const esp_now_recv_info_t *info, const uint8_t *incomingData, int len) {
   #ifdef BLINK_ON_RECV
   digitalWrite(LED_BUILTIN, HIGH);
   #endif
